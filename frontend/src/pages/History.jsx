@@ -141,13 +141,15 @@ export default function History() {
             >
               {/* Thumbnail */}
               <div className="aspect-video w-full bg-slate-100 relative overflow-hidden">
-                {item.image_url ? (
-                  <img src={item.image_url} alt={item.item_name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs font-medium">
-                    No Preview
-                  </div>
-                )}
+                <img 
+                  src={item.image_url || 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=400&q=80'} 
+                  alt={item.item_name} 
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=400&q=80';
+                  }}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                />
                 <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-slate-900/80 text-white text-[11px] font-bold backdrop-blur-xs">
                   {item.category}
                 </div>

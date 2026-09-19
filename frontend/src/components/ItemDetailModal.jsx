@@ -35,13 +35,15 @@ export default function ItemDetailModal({ item, isOpen, onClose, onOpenQrTag }) 
           {/* Left: Thumbnail & Details */}
           <div>
             <div className="aspect-video w-full rounded-xl bg-slate-100 overflow-hidden mb-4 border border-slate-200">
-              {item.image_url ? (
-                <img src={item.image_url} alt={item.item_name} className="w-full h-full object-cover" />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center text-slate-400 text-sm">
-                  No Image Available
-                </div>
-              )}
+              <img 
+                src={item.image_url || 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=400&q=80'} 
+                alt={item.item_name} 
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?w=400&q=80';
+                }}
+                className="w-full h-full object-cover" 
+              />
             </div>
 
             <div className="space-y-2.5 text-sm">
