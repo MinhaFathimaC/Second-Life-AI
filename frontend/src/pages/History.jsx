@@ -26,7 +26,8 @@ export default function History() {
     setLoading(true);
     try {
       const res = await fetchHistory(selectedCategory, selectedAction, searchQuery);
-      setItems(res.items || []);
+      const itemList = Array.isArray(res) ? res : (res && Array.isArray(res.items) ? res.items : []);
+      setItems(itemList);
     } catch (err) {
       console.error('Failed to load history:', err);
       setItems([]);

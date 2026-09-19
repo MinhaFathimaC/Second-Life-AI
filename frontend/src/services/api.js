@@ -166,7 +166,7 @@ export async function fetchHistory(category = 'All', action = 'All', search = ''
         (i.category || '').toLowerCase().includes(query)
       );
     }
-    return items;
+    return { items, total: items.length };
   }
 }
 
