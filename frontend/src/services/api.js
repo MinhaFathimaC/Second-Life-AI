@@ -188,21 +188,60 @@ export async function fetchDashboardStats() {
     const action_counts = {};
     let totalScore = 0;
 
+    let items_reused = 0;
+    let items_donated = 0;
+    let items_recycled = 0;
+    let items_upcycled = 0;
+    let items_repaired = 0;
+
     items.forEach(i => {
       category_counts[i.category] = (category_counts[i.category] || 0) + 1;
       condition_counts[i.condition] = (condition_counts[i.condition] || 0) + 1;
       action_counts[i.primary_action] = (action_counts[i.primary_action] || 0) + 1;
       totalScore += (i.sustainability_score || 75);
+
+      const act = (i.primary_action || '').toUpperCase();
+      if (act === 'REUSE') items_reused++;
+      else if (act === 'DONATE') items_donated++;
+      else if (act === 'RECYCLE') items_recycled++;
+      else if (act === 'UPCYCLE') items_upcycled++;
+      else if (act === 'REPAIR') items_repaired++;
     });
 
+    const actionColors = {
+      'DONATE': '#059669',
+      'REUSE': '#0d9488',
+      'REPAIR': '#eab308',
+      'UPCYCLE': '#9333ea',
+      'RECYCLE': '#0284c7'
+    };
+
+    const action_chart_data = Object.keys(action_counts).map(key => ({
+      name: key,
+      value: action_counts[key],
+      color: actionColors[key] || '#10b981'
+    }));
+
+    const category_chart_data = Object.keys(category_counts).map(key => ({
+      category: key,
+      count: category_counts[key]
+    }));
+
     return {
-      total_analyzed: items.length,
-      average_circularity_score: Math.round(totalScore / items.length),
-      waste_diverted_count: items.length,
-      category_breakdown: category_counts,
-      condition_breakdown: condition_counts,
-      action_breakdown: action_counts,
-      recent_items: items.slice(0, 10)
+      metrics: {
+        total_analyzed: items.length,
+        items_reused,
+        items_donated,
+        items_recycled,
+        items_upcycled,
+        items_repaired,
+        average_sustainability_score: Math.round(totalScore / items.length)
+      },
+      charts: {
+        action_breakdown: action_chart_data,
+        category_distribution: category_chart_data
+      },
+      recent_activity: items.slice(0, 10)
     };
   }
 }

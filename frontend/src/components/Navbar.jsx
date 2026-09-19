@@ -68,7 +68,7 @@ export default function Navbar() {
           {/* Action Button */}
           <div className="hidden lg:flex items-center gap-2">
             <a
-              href="/SecondLife_AI_Presentation.pptx"
+              href={`${import.meta.env.BASE_URL}SecondLife_AI_Presentation.pptx`}
               download="SecondLife_AI_Presentation.pptx"
               className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-xs transition-all hover:-translate-y-0.5"
               title="Download PowerPoint Presentation (.pptx)"
@@ -77,7 +77,7 @@ export default function Navbar() {
               <span>Download PPT</span>
             </a>
             <a
-              href="/SecondLife_AI_Presentation.html"
+              href={`${import.meta.env.BASE_URL}SecondLife_AI_Presentation.html`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all"
